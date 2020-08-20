@@ -1,2 +1,10 @@
+os: windows
 language: csharp
 solution: CiDotNet.sln
+
+install:
+  - nuget restore CiDotNet.sln
+  - nuget install NUnit.Console -Version 3.9.0 -OutputDirectory testrunner
+script:
+  - msbuild /p:Configuration=Release CiDotNet.sln
+  - mono ./testrunner/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe ./CiDotNet.Calc.Test/bin/Release/CiDotNet.Calc.Test.dll
